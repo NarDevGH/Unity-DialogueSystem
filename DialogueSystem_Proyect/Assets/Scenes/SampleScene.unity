@@ -337,12 +337,12 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 36
+  m_fontSize: 70
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 50
+  m_fontSizeMax: 70
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
@@ -740,7 +740,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dialogueManager: {fileID: 1250654950}
-  _dialogue: {fileID: 11400000, guid: c132798c61d5ede47ad7ef52e592b4b0, type: 2}
+  _dialogue: {fileID: 11400000, guid: 6e224cf112fc4e244a4c93635ba083b9, type: 2}
 --- !u!4 &1963482944
 Transform:
   m_ObjectHideFlags: 0
