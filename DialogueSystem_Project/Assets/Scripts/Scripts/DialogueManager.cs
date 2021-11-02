@@ -4,7 +4,6 @@ using UnityEngine;
 public class DialogueManager : MonoBehaviour
 {
     [SerializeField] private ADialogueDisplayer _dialogueDisplayer;
-    public ADialogueDisplayer DialogueDisplayer { get; set; }
 
     private bool _dialogueOngoing;
     public bool DialogueOnGoing { get { return _dialogueOngoing; } }
@@ -17,6 +16,7 @@ public class DialogueManager : MonoBehaviour
         if (instance != null) 
         {
             Destroy(this);
+            Debug.LogWarning($"DialogueManager Instance of {gameObject} DELETED");
         }
 
         instance = this;

@@ -34,53 +34,19 @@ public class TestDialogueDisplayer : ADialogueDisplayer
 
     private IEnumerator DisplayCurrentSentenceRoutine()
     {
-        #region INIT SentenceRoutine 
         _nameField.text = _currentSentence.name + ":";
         _charImagePlace.sprite = _currentSentence.image;
-        _dialogueField.text = "";
+        _dialogueField.text = _currentSentence.sentence;
 
-        int currentCharIndex = 0;
-        bool sentencesFullyDisplayed = false;
-        double characterTimer = _currentSentence.timerPerChar;
-        #endregion
 
-        while (true)
+        while (true) //  click to pass to the next sentence
         {
+            yield return null; 
+
             if (Input.GetMouseButtonDown(0))
             {
-                if (sentencesFullyDisplayed)
-                {
-                    break;
-                }
-                else
-                {
-                    sentencesFullyDisplayed = true;
-                    _dialogueField.text = _currentSentence.sentence;
-                }
+                break;
             }
-
-            if (sentencesFullyDisplayed == false)
-            {
-                if (characterTimer <= 0)
-                {
-                    if (currentCharIndex < _currentSentence.sentence.Length)
-                    {
-                        characterTimer = _currentSentence.timerPerChar;
-                        _dialogueField.text += _currentSentence.sentence[currentCharIndex++];
-                    }
-                    else
-                    {
-                        sentencesFullyDisplayed = true;
-                        _dialogueField.text = _currentSentence.sentence;
-                    }
-                }
-                else
-                {
-                    characterTimer -= Time.unscaledDeltaTime;
-                }
-            }
-
-            yield return null;
         }
     }
 

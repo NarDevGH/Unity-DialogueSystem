@@ -13,19 +13,23 @@ MonoBehaviour:
   m_Name: Dialogue
   m_EditorClassIdentifier: 
   sentences:
-  - name: PEPE
+  - name: Character 1
     image: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-    timerPerChar: 0.25
-    sentence: "sadasdasdamsdasdasmd\xF1lsds\xF1lada\xF1s\xF1ld,as\xF1d,as\xF1d,a\xF1d"
-  - name: JUAN
+    timerPerChar: 0.1
+    sentence: Hi there
+  - name: Character 2
     image: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-    timerPerChar: 0.25
-    sentence: HOLA PEPEEEEEEEEEEEEEee
-  - name: PEPE
+    timerPerChar: 0.15
+    sentence: Oh hello
+  - name: Character 1
     image: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-    timerPerChar: 0.25
-    sentence: "QUE TE PASA \xD1A SKDMASIODKASDPOASDKASPODKASODKASDPOASPLDA"
-  - name: JUAN
+    timerPerChar: 0.1
+    sentence: How its been your day ?
+  - name: Character 2
     image: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
-    timerPerChar: 0.25
-    sentence: Y ES TODO UN TEMA
+    timerPerChar: 0.15
+    sentence: "It\xB4s been pretty ..."
+  - name: Character 2
+    image: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+    timerPerChar: 0.05
+    sentence: "djasdaskldls\xF1ds\xF1a"

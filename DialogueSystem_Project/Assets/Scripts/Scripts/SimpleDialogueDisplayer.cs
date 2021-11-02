@@ -14,31 +14,18 @@ public class SimpleDialogueDisplayer : ADialogueDisplayer
 
     private Queue<Sentence> _sentences = new Queue<Sentence>();
     private Sentence _currentSentence;
-
-    private void Awake()
-    {
-        InitDialogueVariables();
-    }
-
+    private bool _sentenceFullyDisplayed;
 
     public override void StartDialogue(Dialogue dialogue)
     {
-        GetDialogueInformation(dialogue);
+        _sentences.Clear();
+        EnqueueDialogueSentences(dialogue);
+
+        StartCoroutine("DisplayDialogueRoutine");
 
         _animator.Play("StartDialogue");
     }
 
-    public void OnStartDialogueAnim()
-    {
-        StartCoroutine("DisplayDialogueRoutine");
-    }
-
-    public void OnEndDialogueAnim()
-    {
-        InitDialogueVariables();
-
-        OnDialogueEnd();
-    }
 
     private IEnumerator DisplayDialogueRoutine() 
     {
@@ -52,59 +39,59 @@ public class SimpleDialogueDisplayer : ADialogueDisplayer
     }
 
     private IEnumerator DisplayCurrentSentenceRoutine()
-    {
-        #region INIT SentenceRoutine 
+    { 
         _nameField.text = _currentSentence.name + ":";
         _charImagePlace.sprite = _currentSentence.image;
         _dialogueField.text = "";
+        _sentenceFullyDisplayed = false;
+        
+        Coroutine charsApperingEffectRoutine = StartCoroutine("CharactersApperingEffectRoutine");
 
-        int currentCharIndex = 0;
-        bool sentencesFullyDisplayed = false;
-        double characterTimer = _currentSentence.timerPerChar;
-        #endregion
-
-        while (true)
+        while (_sentenceFullyDisplayed == false)
         {
+            yield return null;  // <-
+
             if (Input.GetMouseButtonDown(0))
             {
-                if (sentencesFullyDisplayed)
-                {
-                    break;
-                }
-                else
-                {
-                    sentencesFullyDisplayed = true;
-                    _dialogueField.text = _currentSentence.sentence;
-                }
+                StopCoroutine(charsApperingEffectRoutine);
+                _dialogueField.text = _currentSentence.sentence;
+
+                break;
             }
 
-            if (sentencesFullyDisplayed == false)
+        }
+            
+        while (true) //  click to pass to the next sentence
+        {
+            yield return null; // <- to force continue at the next frame so the next sentence click doesnt get triggered by the skip CharactersApperingEffect click
+
+            if (Input.GetMouseButtonDown(0)) 
             {
-                if (characterTimer <= 0)
-                {
-                    if (currentCharIndex < _currentSentence.sentence.Length)
-                    {
-                        characterTimer = _currentSentence.timerPerChar;
-                        _dialogueField.text += _currentSentence.sentence[currentCharIndex++];
-                    }
-                    else
-                    {
-                        sentencesFullyDisplayed = true;
-                        _dialogueField.text = _currentSentence.sentence;
-                    }
-                }
-                else
-                {
-                    characterTimer -= Time.unscaledDeltaTime;
-                }
+                break;
             }
-
-            yield return null;
         }
     }
 
+    private IEnumerator CharactersApperingEffectRoutine() 
+    {
+        int currentCharIndex = 0;
+        int sentenceLenght = _currentSentence.sentence.Length;
 
-    private void GetDialogueInformation(Dialogue dialogue)
+        while (currentCharIndex < sentenceLenght) 
+        {
+            _dialogueField.text += _currentSentence.sentence[currentCharIndex++];
+            yield return new WaitForSeconds(_currentSentence.timerPerChar);
+        }
+
+        _sentenceFullyDisplayed = true;
+    }
+
+    public void OnEndDialogueAnim()
+    {
+        OnDialogueEnd();
+    }
+
+    private void EnqueueDialogueSentences(Dialogue dialogue)
     {
         foreach (Sentence sentence in dialogue.sentences)
         {
@@ -112,12 +99,4 @@ public class SimpleDialogueDisplayer : ADialogueDisplayer
         }
     }
 
-    private void InitDialogueVariables()
-    {
-        _nameField.text = "";
-        _dialogueField.text = "";
-        _charImagePlace.sprite = null;
-
-        _sentences.Clear();
-    }
 }
